@@ -15,6 +15,8 @@ namespace GSGD2.Gameplay
         // expression body
         public int PathLength => _path.Length;
 
+        public bool IsLoop => _isLoop;
+
         // ref enable the possibility to change index inside this function 
         public bool TryGetNextWaypoint(ref int index, out Vector3 nextWaypoint)
         {
@@ -22,11 +24,11 @@ namespace GSGD2.Gameplay
             {
                 index = 0;
             }
-            //if (index < PathLength)
-            //{
-            //    nextWaypoint = _path[index].position;
-            //    return true;
-            //}
+            if (index < PathLength)
+            {
+                nextWaypoint = _path[index].position;
+                return true;
+            }
             else
             {
                 nextWaypoint = Vector3.zero;

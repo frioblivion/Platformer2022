@@ -10,6 +10,8 @@
 	[System.Serializable]
 	public class Dash : PlayerRigidbodyForceApplier
 	{
+		public bool _infDash = false;
+
 		[SerializeField]
 		private float _dashForce = 3f;
 
@@ -34,9 +36,19 @@
 
 		public void EndDash(Rigidbody rigidbody)
 		{
-			cubeController.SetColliderTrigger(false);
-			rigidbody.velocity = Vector3.zero;
-			StopTimer();
+			if (_infDash == false)
+			{
+				cubeController.SetColliderTrigger(false);
+				rigidbody.velocity = Vector3.zero;
+				StopTimer();
+			}
+			else
+            {
+				cubeController.SetColliderTrigger(false);
+				rigidbody.velocity = Vector3.zero;
+				
+				StopTimer();
+			}
 
 			//Debug.Break();
 

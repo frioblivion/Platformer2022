@@ -17,6 +17,8 @@ namespace GSGD2.Gameplay
 
         private int _currentPathIndex = 0;
 
+        private bool _isReverse = false;
+
         private void Update()
         {
             // Get Next destination ?
@@ -36,15 +38,29 @@ namespace GSGD2.Gameplay
                 // If I'm near destination
                 if (Vector3.Distance(transform.position, nextWaypoint) < _destinationThreshold)
                 {
-                    if (_currentPathIndex > 3)
+                    if (_isReverse == false)
                     {
                         _currentPathIndex++;
-                        TryGetNextWaypoint(); // the recursion appears here, we call again our function
-
                     }
+                    else
+                    {
+                        _currentPathIndex--;
+                    }
+
+                    if (_path.IsLoop == false)
+                    {
+                        if (_currentPathIndex >= _path.PathLength - 1)
+                        {
+                            _isReverse = true;
+                        }
+                        else if (_currentPathIndex <= 0)
+                        {
+                            _isReverse = false;
+                        }
+                    }
+                    TryGetNextWaypoint(); // the recursion appears here, we call again our function
                 }
             }
-
             return nextWaypoint;
         }
 
